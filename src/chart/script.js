@@ -8,7 +8,7 @@ function getRandomIntInclusive(min, max) {
 // create initial empty chart
 var ctx_live = document.getElementById("mycanvas");
 
-const DATA_COUNT = 50;
+const DATA_COUNT = 4;
 var CURRENT_STEP = 0;
 const labels = [];
 const Utils = ChartUtils.init();
@@ -92,9 +92,15 @@ var getData = function() {
     success: function(data) {
       //myChart.data.labels[CURRENT_STEP]="Замер" + CURRENT_STEP;
       myChart.data.datasets[0].data[CURRENT_STEP] = data.current_cpu;
-      //myChart.data.datasets[1].data[CURRENT_STEP+1] = data.predictions['30s'];
-      myChart.data.datasets[2].data[CURRENT_STEP+2] = data.predictions['60s'];
+      myChart.data.datasets[1].data[CURRENT_STEP+2] = data.predictions['30s'];
+      if (CURRENT_STEP+4 >= DATA_COUNT) {
+        myChart.data.labels[CURRENT_STEP+4]=CURRENT_STEP+4;
+        //myChart.data.datasets[0].data.push(0);
+        //myChart.data.datasets[1].data.push(0);
+        //myChart.data.datasets[2].data.push(0);
+      }
       //myChart.data.datasets[3].data[CURRENT_STEP+10] = data.predictions['300s'];
+      myChart.data.datasets[2].data[CURRENT_STEP+4] = data.predictions['60s'];
       CURRENT_STEP++;
       myChart.update();
     }
