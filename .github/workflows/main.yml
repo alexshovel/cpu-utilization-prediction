@@ -1,0 +1,11 @@
+on: [push]
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    steps:
+      - name: cache source data
+        id: cache-source-data
+        uses: actions/cache@v3
+        with:
+          path: assets/source-data
+          key: source-dataset
