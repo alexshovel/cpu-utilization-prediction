@@ -29,7 +29,7 @@ def get_prediction_for_step(step: int):
     res = {}
 
     try:
-        pg_data = readBestModel(f'linear_model-{step}')
+        pg_data = readBestModel(step)
 
         columns = pickle.loads(pg_data.get('columns'))
         model = pickle.loads(pg_data.get('body'))

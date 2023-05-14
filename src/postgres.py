@@ -77,22 +77,22 @@ def readDataset(dset_name):
     db_result = dbmanager.fetchone(query, (dset_name,))
     return db_result
 
-def writeModel(model_name, model_body, model_columns, model_mse):
+def writeModel(model_name, model_body, model_columns, model_score):
     dbmanager = DBManager(app_settings.get('db_name','postgres'), app_settings.get('trainer_sql_login'), app_settings.get('trainer_sql_pass'), app_settings.get('db_server'), 5432)
-    query = 'INSERT INTO models (model_name, body, mse, columns) VALUES (%s, %s, %s, %s)'
-    db_result = dbmanager.query(query, (model_name, pickle.dumps(model_body), model_mse, pickle.dumps(model_columns)))
+    query = 'INSERT INTO models (model_name, body, score, columns) VALUES (%s, %s, %s, %s)'
+    db_result = dbmanager.query(query, (model_name, pickle.dumps(model_body), model_score, pickle.dumps(model_columns)))
     return {}
 
-def readBestModel(model_name):
+def readBestModel(step):
     dbmanager = DBManager(app_settings.get('db_name','postgres'), app_settings.get('predictor_sql_login'), app_settings.get('predictor_sql_pass'), app_settings.get('db_server'), 5432)
-    query = 'SELECT * FROM models WHERE model_name=%s ORDER BY mse DESC LIMIT 1'
+    query = 'SELECT * FROM models WHERE model_name LIKE "%-%s" ORDER BY score DESC LIMIT 1'
     db_result = dbmanager.fetchone(query, (model_name,))
     return db_result
 
-def readLastModel(model_name):
+def readLastModel(step):
     dbmanager = DBManager(app_settings.get('db_name','postgres'), app_settings.get('predictor_sql_login'), app_settings.get('predictor_sql_pass'), app_settings.get('db_server'), 5432)
-    query = 'SELECT * FROM models WHERE model_name=%s ORDER BY cdate DESC LIMIT 1'
-    db_result = dbmanager.fetchone(query, (model_name,))
+    query = 'SELECT * FROM models WHERE model_name LIKE "%-%s" ORDER BY cdate DESC LIMIT 1'
+    db_result = dbmanager.fetchone(query, (step,))
     return db_result
 
 if __name__ == '__main__':
