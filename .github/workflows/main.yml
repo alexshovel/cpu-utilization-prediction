@@ -4,5 +4,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: install requirements.txt
+        uses: actions/checkout@master
         run: |
           ls -al .
