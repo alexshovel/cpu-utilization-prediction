@@ -48,6 +48,7 @@ jobs:
       # Train models
       - name: getting dataset from prometheus
         run: |
+          rm -rf src/__pycache__
           python src/train.py -m linear
 
 
@@ -74,6 +75,7 @@ jobs:
       # training SVR model
       - name: getting dataset from prometheus
         run: |
+          rm -rf src/__pycache__
           python src/train.py -m svr
 
 
