@@ -3,12 +3,7 @@ jobs:
   pull-dataset-from-prometheus:
     runs-on: ubuntu-latest
     steps:
-      - name: cache env
-        uses: actions/checkout@master
-        with:
-          path: assets/source-data
-          key: source-dataset
-
+      - uses: actions/checkout@master
       # Getting new dataset
       - name: install requirements.txt
         run: |
