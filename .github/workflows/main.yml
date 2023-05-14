@@ -3,7 +3,7 @@ jobs:
   pull-dataset-from-prometheus:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@master
       - name: install requirements.txt
-        uses: actions/checkout@master
         run: |
           ls -al .
