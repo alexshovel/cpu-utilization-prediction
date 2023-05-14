@@ -4,9 +4,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
+      
+      - name: cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v3
+        with:
+          path: /home/runner/work/_temp/Library
+          key:  dependencies-v1
+          
       # Getting new dataset
       - name: install requirements.txt
         run: |
+          sudo apt-get install libpq-dev gcc libpqxx-dev
           python3 -m pip install --upgrade pip
           pip install -r requirements.txt
           python src/prom2csv.py
