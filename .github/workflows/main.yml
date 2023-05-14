@@ -1,6 +1,6 @@
 on: [push]
 jobs:
-  pull:
+  pull dataset from prometheus:
     runs-on: ubuntu-latest
     steps:
       - name: cache source data
