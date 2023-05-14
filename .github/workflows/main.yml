@@ -14,6 +14,8 @@ jobs:
           
       # Getting new dataset
       - name: install requirements.txt
+        env:
+          SCIPY_USE_PYTHRAN: 0
         run: |
           sudo apt-get install python3-dev libpq-dev gcc libpqxx-dev
           pip install Cmake
