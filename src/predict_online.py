@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
-from joblib import dump, load
 from settings import app_settings
 import requests
 import pandas as pd
+import pickle
+from postgres import readBestModel
 
 db_addr = app_settings.get('target_host', '127.0.0.1')
 db_port = app_settings.get('prometheus_port', '9090')
@@ -28,17 +29,27 @@ def get_prediction_for_step(step: int):
     res = {}
 
     try:
-        columns = load(f'models/predictor_columns-{step}.joblib')
-        model = load(f'models/best_model-{step}.joblib')
+        pg_data = readBestModel(f'linear_model-{step}')
+
+        columns = pickle.loads(pg_data.get('columns'))
+        model = pickle.loads(pg_data.get('body'))
 
         predictors = {}
+        #print(columns)
 
         for label in columns:
             data = get_current_metric(label)['data']
-            predictors.update({label: [data['result'][0]['value'][1], ]},)
+
+            try:
+                predictors.update({label: [data['result'][0]['value'][1], ]},)
+            except:
+                predictors.update({label: 0})
 
         data = pd.DataFrame(predictors)
-        return model.predict(data[:1])[0]
+        print(data[:1])
+        prediction = model.predict(data[:1])[0]
+        print(step, prediction)
+        return prediction
     except FileNotFoundError:
         return 0
 
@@ -53,6 +64,7 @@ def predict_cpu(step: int = 0):
         'current_cpu': get_current_cpu(),
         'timestamp': 0,
         'predictions': {}}
+
     if step > 0:
         res['predictions'].update({f'{step}s': get_prediction_for_step(step), })
     else:

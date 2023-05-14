@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 
 import requests
-import csv
 import os
 import pandas as pd
 from settings import app_settings
 import time
+from io import StringIO
+from postgres import writeDataset
 
 
 def getMetric(api_url: str, label: str, start: str, end: str, step: int=90):
@@ -86,11 +87,15 @@ def run():
                 if lbl not in app_settings.get('ignoring_metrics') and len_of_metric == len(data['times']) and len(set(data['vals'])) > 2:
                     res.update({lbl:data['vals'],})
             except Exception as e:
-                print('ERROR', e)
+                pass
+                #print('ERROR', e)
 
         if not os.path.exists('datasets'):
             os.makedirs('datasets')
-        pd.DataFrame.from_dict(res).to_csv(f'datasets/dataset-{step}.csv', index=False)
+
+        s = StringIO()
+        pd.DataFrame.from_dict(res).drop('timestamp', axis=1).to_csv(s, index=False)
+        writeDataset(f'dataset-{step}', s.getvalue())
 
 if __name__ == '__main__':
     run()

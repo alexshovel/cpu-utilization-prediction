@@ -99,7 +99,7 @@ var getData = function() {
         //myChart.data.datasets[1].data.push(0);
         //myChart.data.datasets[2].data.push(0);
       }
-      //myChart.data.datasets[3].data[CURRENT_STEP+10] = data.predictions['300s'];
+      myChart.data.datasets[3].data[CURRENT_STEP+10] = data.predictions['300s'];
       myChart.data.datasets[2].data[CURRENT_STEP+4] = data.predictions['60s'];
       CURRENT_STEP++;
       myChart.update();
