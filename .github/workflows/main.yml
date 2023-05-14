@@ -6,4 +6,3 @@ jobs:
       - name: install requirements.txt
         run: |
           ls -al .
-          pip install -r requirements.txt
