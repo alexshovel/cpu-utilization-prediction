@@ -6,4 +6,4 @@ jobs:
       - uses: actions/checkout@master
       - name: install requirements.txt
         run: |
-          ls -al .
+          pip install -r requirements.txt
