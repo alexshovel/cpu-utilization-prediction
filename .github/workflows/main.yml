@@ -17,5 +17,6 @@ jobs:
         run: |
           sudo apt-get install libpq-dev gcc libpqxx-dev
           python3 -m pip install --upgrade pip
+          pip install Cmake
           pip install -r requirements.txt
           python src/prom2csv.py
