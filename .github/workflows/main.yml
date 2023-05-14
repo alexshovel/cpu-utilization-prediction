@@ -12,7 +12,7 @@ jobs:
           path: ~/
           key:  dependencies-v2
           
-      # Getting new dataset
+      # Installing dependencies
       - name: install requirements.txt
         env:
           SCIPY_USE_PYTHRAN: 0
@@ -21,5 +21,8 @@ jobs:
           sudo apt-get install python3-dev  python3-numpy python3-scipy libpq-dev gcc libpqxx-dev gfortran libblas3 liblapack3 liblapack-dev libblas-dev libatlas-base-dev
           pip install Cmake
           pip install -r requirements.txt
-          cd src
-          python prom2csv.py
+          
+      # Getting new datasets
+      - name: install requirements.txt
+        run: |
+          python src/prom2csv.py
