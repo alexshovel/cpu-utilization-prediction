@@ -17,7 +17,7 @@ jobs:
         env:
           SCIPY_USE_PYTHRAN: 0
         run: |
-          sudo apt-get install python3-dev libpq-dev gcc libpqxx-dev libblas-dev liblapack-dev libatlas-base-dev
+          sudo apt-get install python3-dev libpq-dev gcc libpqxx-dev libblas-dev liblapack-dev libatlas-base-dev gfortran
           pip install Cmake
           pip install -r requirements.txt
           python src/prom2csv.py
