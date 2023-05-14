@@ -9,6 +9,7 @@ jobs:
         id: cache-dependencies
         uses: actions/cache@v3
         with:
+          path: ~/.caches
           key:  dependencies-v1
           
       # Getting new dataset
