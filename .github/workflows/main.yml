@@ -10,7 +10,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/
-          key:  dependencies-v1
+          key:  dependencies-v2
           
       # Getting new dataset
       - name: install requirements.txt
@@ -20,6 +20,6 @@ jobs:
         run: |
           sudo apt-get install python3-dev  python3-numpy python3-scipy libpq-dev gcc libpqxx-dev gfortran libblas3 liblapack3 liblapack-dev libblas-dev libatlas-base-dev
           pip install Cmake
-          #pip install -r requirements.txt
-          #cd src
-          #python prom2csv.py
+          pip install -r requirements.txt
+          cd src
+          python prom2csv.py
