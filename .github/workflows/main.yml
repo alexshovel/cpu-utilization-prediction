@@ -23,6 +23,6 @@ jobs:
           pip install -r requirements.txt
           
       # Getting new datasets
-      - name: install requirements.txt
+      - name: getting dataset from prometheus
         run: |
           python src/prom2csv.py
