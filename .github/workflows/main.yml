@@ -16,7 +16,6 @@ jobs:
       - name: install requirements.txt
         env:
           SCIPY_USE_PYTHRAN: 0
-        if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: |
           sudo apt-get install python3-dev  python3-numpy python3-scipy libpq-dev gcc libpqxx-dev gfortran libblas3 liblapack3 liblapack-dev libblas-dev libatlas-base-dev
           pip install Cmake
