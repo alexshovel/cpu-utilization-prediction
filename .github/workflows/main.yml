@@ -3,7 +3,14 @@ jobs:
   pull-dataset-from-prometheus:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - name: cache env
+        uses: actions/checkout@master
+        with:
+          path: assets/source-data
+          key: source-dataset
+
+      # Getting new dataset
       - name: install requirements.txt
         run: |
           pip install -r requirements.txt
+          python src/prom2csv.py
