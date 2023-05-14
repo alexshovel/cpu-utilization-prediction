@@ -3,9 +3,6 @@ jobs:
   pull-dataset-from-prometheus:
     runs-on: ubuntu-latest
     steps:
-      - name: cache source data
-        id: cache-source-data
-        uses: actions/cache@v3
-        with:
-          path: assets/source-data
-          key: source-dataset
+      - name: install requirements.txt
+        run: |
+          pip install -r requirements.txt
