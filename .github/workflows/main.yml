@@ -25,3 +25,41 @@ jobs:
       - name: getting dataset from prometheus
         run: |
           python src/prom2csv.py
+          
+          
+  train-linear-model:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      
+      - name: cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/
+          key:  dependencies-v2
+
+      # Train models
+      - name: getting dataset from prometheus
+        run: |
+          python src/train.py -m linear
+
+
+  train-svr-model:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      
+      - name: cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/
+          key:  dependencies-v2
+
+      # Getting new datasets
+      - name: getting dataset from prometheus
+        run: |
+          python src/train.py -m svr
+
+
