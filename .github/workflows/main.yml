@@ -116,9 +116,9 @@ jobs:
         - name: SCP files via ssh key
           uses: appleboy/scp-action@master
           with:
-            USERNAME: ${{ secrets.USERNAME }}
-            HOST: ${{ secrets.HOSTNAME }}
-            PASSWORD: ${{ secrets.PASSWORD }}
+            USERNAME: ${{ secrets.ssh_deploy.USERNAME }}
+            HOST: ${{ secrets.ssh_deploy.HOSTNAME }}
+            PASSWORD: ${{ secrets.ssh_deploy.PASSWORD }}
             source: './src/*'
             target: '/home/${{ secrets.USERNAME }}/dist/'
 
