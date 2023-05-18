@@ -113,6 +113,14 @@ jobs:
       name: SCP files to server
       runs-on: ubuntu-latest
       steps:
+        - uses: actions/checkout@master
+        
+        - name: Selecting best models in Postgres
+          run: |
+            echo ${{ secrets.ssh_deploy.USERNAME }} 1
+            echo ${{ secrets.ssh_deploy.HOSTNAME }} 2
+            echo ${{ secrets.ssh_deploy.PASSWORD }} 3
+        
         - name: SCP files via ssh key
           uses: appleboy/scp-action@master
           with:
