@@ -110,26 +110,16 @@ jobs:
           
           
   deploy-on-target:
-    # needs: select-best-model
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      
-      - name: cache dependencies
-        id: cache-dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/
-          key:  dependencies-v3
+      name: SCP files to server
+      runs-on: ubuntu-latest
+      steps:
+        - name: SCP files via ssh key
+          uses: actions/checkout@master
+          env:
+            USERNAME: ${{ secrets.USERNAME }}
+            HOST: ${{ secrets.HOSTNAME }}
+            KEY: ${{ secrets.DEPLOY_TO_VM }}
+          with:
+            source: './src/*'
+            target: '/home/${{ secrets.USERNAME }}/dist/'
 
-      # Installing dependencies
-      - name: install requirements.txt
-        run: |
-          sudo apt-get install python3-dev  python3-numpy python3-scipy libpq-dev gcc libpqxx-dev gfortran libblas3 liblapack3 liblapack-dev libblas-dev libatlas-base-dev
-          pip install Cmake
-          pip install -r requirements.txt
-
-      # training SVR model
-      - name: sending script to target host
-        run: |
-          ls -al
