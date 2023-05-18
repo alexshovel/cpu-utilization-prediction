@@ -118,7 +118,7 @@ jobs:
           with:
             USERNAME: ${{ secrets.USERNAME }}
             HOST: ${{ secrets.HOSTNAME }}
-            KEY: ${{ secrets.DEPLOY_TO_VM }}
+            PASSWORD: ${{ secrets.PASSWORD }}
             source: './src/*'
             target: '/home/${{ secrets.USERNAME }}/dist/'
 
