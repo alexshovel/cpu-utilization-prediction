@@ -125,12 +125,18 @@ jobs:
             source: './src/*'
             target: '/home/${{ secrets.USERNAME }}/dist/'
             
-        - name: Reload backend server
+        - name: Stop  backend server
           uses: appleboy/ssh-action@master
           with:
             USERNAME: ${{ secrets.USERNAME }}
             HOST: ${{ secrets.HOSTNAME }}
             KEY: ${{ secrets.SSH_DEPLOY_KEY }}
-            script: |
-              pkill -9 -f cpu-predictor-server.py &>/dev/null &
-              ~/env/bin/python3 ~/dist/src/cpu-predictor-server.py &>/dev/null & 
+            script: pkill -9 -f cpu-predictor-server.py &>/dev/null &
+            
+        - name: Start  backend server
+          uses: appleboy/ssh-action@master
+          with:
+            USERNAME: ${{ secrets.USERNAME }}
+            HOST: ${{ secrets.HOSTNAME }}
+            KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+            script: ~/env/bin/python3 ~/dist/src/cpu-predictor-server.py &>/dev/null & 
