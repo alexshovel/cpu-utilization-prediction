@@ -79,3 +79,31 @@ jobs:
           python src/train.py -m svr
 
 
+
+  select-best-model:
+    needs: 
+      - train-linear-model
+      - train-svr-model
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      
+      - name: cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/
+          key:  dependencies-v3
+
+      # Installing dependencies
+      - name: install requirements.txt
+        run: |
+          sudo apt-get install python3-dev  python3-numpy python3-scipy libpq-dev gcc libpqxx-dev gfortran libblas3 liblapack3 liblapack-dev libblas-dev libatlas-base-dev
+          pip install Cmake
+          pip install -r requirements.txt
+
+      # training SVR model
+      - name: training SVR model
+        run: |
+          rm -rf src/__pycache__
+          python src/save_best_model.py -m svr
