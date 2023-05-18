@@ -110,7 +110,7 @@ jobs:
           
           
   deploy-on-target:
-      needs: select-best-model
+      # needs: select-best-model
       name: SCP files to server
       runs-on: ubuntu-latest
       steps:
@@ -121,7 +121,7 @@ jobs:
           with:
             USERNAME: ${{ secrets.USERNAME }}
             HOST: ${{ secrets.HOSTNAME }}
-            PASSWORD: ${{ secrets.PASSWORD }}
+            KEY: ${{ secrets.SSH_DEPLOY_KEY }}
             source: './src/*'
             target: '/home/${{ secrets.USERNAME }}/dist/'
 
