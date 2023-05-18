@@ -115,11 +115,10 @@ jobs:
       steps:
         - name: SCP files via ssh key
           uses: appleboy/scp-action@master
-          env:
+          with:
             USERNAME: ${{ secrets.USERNAME }}
             HOST: ${{ secrets.HOSTNAME }}
             KEY: ${{ secrets.DEPLOY_TO_VM }}
-          with:
             source: './src/*'
             target: '/home/${{ secrets.USERNAME }}/dist/'
 
