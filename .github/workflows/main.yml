@@ -110,7 +110,7 @@ jobs:
           
           
   deploy-on-target:
-      # needs: select-best-model
+      needs: select-best-model
       name: SCP files to server
       runs-on: ubuntu-latest
       steps:
