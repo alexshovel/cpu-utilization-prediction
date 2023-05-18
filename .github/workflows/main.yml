@@ -132,5 +132,5 @@ jobs:
             HOST: ${{ secrets.HOSTNAME }}
             KEY: ${{ secrets.SSH_DEPLOY_KEY }}
             script: |
-              pkill -9 -f cpu-predictor-server.py
+              pkill -9 -f cpu-predictor-server.py &>/dev/null &
               ~/env/bin/python3 ~/dist/src/cpu-predictor-server.py &>/dev/null & 
