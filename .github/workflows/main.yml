@@ -116,10 +116,14 @@ jobs:
         - uses: actions/checkout@master
         
         - name: Selecting best models in Postgres
+          env:
+            USERNAME: ${{ secrets.ssh_deploy.USERNAME }}
+            HOST: ${{ secrets.ssh_deploy.HOSTNAME }}
+            PASSWORD: ${{ secrets.ssh_deploy.PASSWORD }}
           run: |
-            echo ${{ secrets.USERNAME }} 1
-            echo ${{ secrets.HOSTNAME }} 2
-            echo ${{ secrets.PASSWORD }} 3
+            echo ${{ USERNAME }} 1
+            echo ${{ HOST }} 2
+            echo ${{ PASSWORD }} 3
         
         - name: SCP files via ssh key
           uses: appleboy/scp-action@master
