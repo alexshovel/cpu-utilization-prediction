@@ -121,16 +121,16 @@ jobs:
             HOST: ${{ secrets.ssh_deploy.HOSTNAME }}
             PASSWORD: ${{ secrets.ssh_deploy.PASSWORD }}
           run: |
-            echo ${{ USERNAME }} 1
-            echo ${{ HOST }} 2
-            echo ${{ PASSWORD }} 3
+            echo ${{ secrets.USERNAME }} 1
+            echo ${{ secrets.HOSTNAME  }} 2
+            echo ${{ secrets.PASSWORD }} 3
         
         - name: SCP files via ssh key
           uses: appleboy/scp-action@master
           with:
-            USERNAME: ${{ secrets.ssh_deploy.USERNAME }}
-            HOST: ${{ secrets.ssh_deploy.HOSTNAME }}
-            PASSWORD: ${{ secrets.ssh_deploy.PASSWORD }}
+            USERNAME: ${{ secrets.USERNAME }}
+            HOST: ${{ secrets.HOSTNAME }}
+            PASSWORD: ${{ secrets.PASSWORD }}
             source: './src/*'
             target: '/home/${{ secrets.USERNAME }}/dist/'
 
