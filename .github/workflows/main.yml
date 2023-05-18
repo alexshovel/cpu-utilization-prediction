@@ -127,7 +127,9 @@ jobs:
             
         - name: Run backend server
           run: |
-            echo ${{ secrets.SSH_DEPLOY_KEY }} | ssh -i /dev/stdin ${{ secrets.HOSTNAME }}@${{ secrets.HOSTNAME }} 'pkill -9 -f cpu-predictor-server.py'
-            echo ${{ secrets.SSH_DEPLOY_KEY }} | ssh -i /dev/stdin ${{ secrets.HOSTNAME }}@${{ secrets.HOSTNAME }} '~/env/bin/python3 ~/dist/src/cpu-predictor-server.py &>/dev/null &'
+            echo ${{ secrets.SSH_DEPLOY_KEY }} >> test.test
+            cat test.test 
+            # echo ${{ secrets.SSH_DEPLOY_KEY }} | ssh -i /dev/stdin ${{ secrets.HOSTNAME }}@${{ secrets.HOSTNAME }} 'pkill -9 -f cpu-predictor-server.py'
+            # echo ${{ secrets.SSH_DEPLOY_KEY }} | ssh -i /dev/stdin ${{ secrets.HOSTNAME }}@${{ secrets.HOSTNAME }} '~/env/bin/python3 ~/dist/src/cpu-predictor-server.py &>/dev/null &'
 
  
