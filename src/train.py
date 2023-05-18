@@ -28,8 +28,10 @@ def train_selected_model(data: pd, step: int):
 
     if script_args.regression_type in ['L', 'Linear', 'linear']:
         pg_key = 'linear_model'
+        train_iters = 100
     elif script_args.regression_type in ['M', 'MLPRegressor', 'MLPR', 'mlpregressor']:
         pg_key = 'svr_model'
+        train_iters = 4
 
     y = data[target_metric]
     X = data.drop(target_metric, axis=1)
@@ -41,11 +43,11 @@ def train_selected_model(data: pd, step: int):
         best_score = pg_best_model.get('score')
     except BaseException:
         best_model = None
-        best_score = 0
+        best_score = -1
 
     print('Starting from', best_score)
 
-    for i in range(100):
+    for i in range(train_iters):
         X_train, X_test, y_train, y_test = train_test_split(
             X, y, train_size=0.8)
 
