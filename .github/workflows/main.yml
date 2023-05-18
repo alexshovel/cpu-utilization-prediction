@@ -114,7 +114,7 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - name: SCP files via ssh key
-          uses: actions/checkout@master
+          uses: appleboy/scp-action@master
           env:
             USERNAME: ${{ secrets.USERNAME }}
             HOST: ${{ secrets.HOSTNAME }}
