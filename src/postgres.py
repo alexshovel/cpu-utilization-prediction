@@ -85,15 +85,26 @@ def writeModel(model_name, model_body, model_columns, model_score):
 
 def readBestModel(step):
     dbmanager = DBManager(app_settings.get('db_name','postgres'), app_settings.get('predictor_sql_login'), app_settings.get('predictor_sql_pass'), app_settings.get('db_server'), 5432)
-    query = 'SELECT * FROM models WHERE model_name LIKE "%-%s" ORDER BY score DESC LIMIT 1'
-    db_result = dbmanager.fetchone(query, (model_name,))
+    query = "SELECT * FROM models WHERE model_name LIKE '%%-%s' ORDER BY score DESC LIMIT 1"
+    print(step, query)
+    db_result = dbmanager.fetchone(query, (step,))
     return db_result
 
 def readLastModel(step):
     dbmanager = DBManager(app_settings.get('db_name','postgres'), app_settings.get('predictor_sql_login'), app_settings.get('predictor_sql_pass'), app_settings.get('db_server'), 5432)
-    query = 'SELECT * FROM models WHERE model_name LIKE "%-%s" ORDER BY cdate DESC LIMIT 1'
+    query = 'SELECT * FROM models WHERE model_name LIKE "%%-%s" ORDER BY cdate DESC LIMIT 1'
     db_result = dbmanager.fetchone(query, (step,))
     return db_result
+
+def setTargetModel(step):
+    dbmanager = DBManager(app_settings.get('db_name','postgres'), app_settings.get('trainer_sql_login'), app_settings.get('trainer_sql_pass'), app_settings.get('db_server'), 5432)
+    best_model = readBestModel(step)
+    query = "UPDATE models SET is_target = False WHERE model_name LIKE '%%-%s'"
+    dbmanager.query(query, (step,))
+    query = 'UPDATE models SET is_target = True WHERE id=%s'
+    dbmanager.query(query, (best_model.get('id'),))
+
+
 
 if __name__ == '__main__':
     """
@@ -103,8 +114,8 @@ if __name__ == '__main__':
     with open('models/predictor_columns-300.joblib', 'rb') as f:
         content = f.read()
         writeModel('test_model_name', content, content, 0.3333)
-    print(readBestModel('test_model_name'))
-    print(readLastModel('test_model_name'))
+    print(readBestModel(30))
+    # print(readLastModel(30))
     """
 
 
