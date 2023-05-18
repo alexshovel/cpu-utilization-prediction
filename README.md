@@ -26,3 +26,12 @@
 #### Источники:
 * [Датасет](https://github.com/alexshovel/dataset/dataset.tar.gz)
 * [Репозиторий проекта](https://github.com/alexshovel/cpu-utilization-prediction)
+
+#### Диаграмма компонентов:
+
+![Рисунок 3. Диаграмма компонентов](./imgs/lab2-pic3.png)
+
+
+#### Диаграмма активностей:
+
+![Рисунок 4. Диаграмма активностей](./imgs/lab2-pic4.png)
