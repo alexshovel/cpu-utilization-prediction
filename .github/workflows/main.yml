@@ -23,7 +23,32 @@ jobs:
       - name: getting dataset from prometheus
         run: |
           python src/prom2csv.py
+
+  refine-linear-model:
+    needs: pull-dataset-from-prometheus
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      
+      - name: cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/
+          key:  dependencies-v3
           
+      # Installing dependencies
+      - name: install requirements.txt
+        run: |
+          sudo apt-get install python3-dev  python3-numpy python3-scipy libpq-dev gcc libpqxx-dev gfortran libblas3 liblapack3 liblapack-dev libblas-dev libatlas-base-dev
+          pip install Cmake
+          pip install -r requirements.txt
+
+      # Train models
+      - name: getting dataset from prometheus
+        run: |
+          rm -rf src/__pycache__
+          python src/train.py -m linear -r
           
   train-linear-model:
     needs: pull-dataset-from-prometheus
