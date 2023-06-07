@@ -85,14 +85,14 @@ def writeModel(model_name, model_body, model_columns, model_score):
 
 def readBestModel(step):
     dbmanager = DBManager(app_settings.get('db_name','postgres'), app_settings.get('predictor_sql_login'), app_settings.get('predictor_sql_pass'), app_settings.get('db_server'), 5432)
-    query = "SELECT * FROM models WHERE model_name LIKE '%%-%s' ORDER BY score DESC LIMIT 1"
+    query = "SELECT * FROM models WHERE model_name LIKE %s ORDER BY score DESC LIMIT 1"
     print(step, query)
     db_result = dbmanager.fetchone(query, (step,))
     return db_result
 
 def readLastModel(step):
     dbmanager = DBManager(app_settings.get('db_name','postgres'), app_settings.get('predictor_sql_login'), app_settings.get('predictor_sql_pass'), app_settings.get('db_server'), 5432)
-    query = 'SELECT * FROM models WHERE model_name LIKE "%%-%s" ORDER BY cdate DESC LIMIT 1'
+    query = 'SELECT * FROM models WHERE model_name LIKE %s ORDER BY cdate DESC LIMIT 1'
     db_result = dbmanager.fetchone(query, (step,))
     return db_result
 
