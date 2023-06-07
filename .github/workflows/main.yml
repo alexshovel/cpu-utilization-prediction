@@ -136,11 +136,8 @@ jobs:
     needs: 
       - train-linear-model
       - train-svr-model
-    if: False
-    needs: 
       - refine-linear-model
       - refine-svr-model
-    if: True
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
