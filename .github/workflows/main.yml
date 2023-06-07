@@ -135,6 +135,7 @@ jobs:
   select-best-new-model:
     needs: 
       - train-linear-model
+      - train-svr-model
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
