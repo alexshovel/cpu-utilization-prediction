@@ -132,11 +132,9 @@ jobs:
 
 
 
-  select-best-model:
+  select-best-new-model:
     needs: 
       - train-linear-model
-      - train-svr-model
-    if: False
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -161,9 +159,38 @@ jobs:
           rm -rf src/__pycache__
           python src/save_best_model.py
           
-          
+  select-best-refined-model:
+    needs: 
+      - refine-linear-model
+      - refine-svr-model
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      
+      - name: cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/
+          key:  dependencies-v3
+
+      # Installing dependencies
+      - name: install requirements.txt
+        run: |
+          sudo apt-get install python3-dev  python3-numpy python3-scipy libpq-dev gcc libpqxx-dev gfortran libblas3 liblapack3 liblapack-dev libblas-dev libatlas-base-dev
+          pip install Cmake
+          pip install -r requirements.txt
+
+      # training SVR model
+      - name: Selecting best models in Postgres
+        run: |
+          rm -rf src/__pycache__
+          python src/save_best_model.py
+                
   deploy-on-target:
-      needs: select-best-model
+      needs: 
+        - select-best-new-model
+        - select-best-refined-model
       name: SCP files to server
       runs-on: ubuntu-latest
       steps:
