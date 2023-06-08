@@ -26,13 +26,13 @@ def train_selected_model(data: pd, step: int):
     global script_args
     target_metric = app_settings.get('target_metric')
 
-    train_iters = 1
+    train_iters = 2
     if script_args.regression_type in ['L', 'Linear', 'linear']:
         pg_key = 'linear_model'
         train_iters = 100
     elif script_args.regression_type in ['S', 'SVR', 'svr', 'svrregressor']:
         pg_key = 'svr_model'
-        train_iters = 1
+        train_iters = 2
         return 1
 
     y = data[target_metric]
