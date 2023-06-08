@@ -139,7 +139,6 @@ jobs:
           
   select-best-refined-model:
     needs: 
-      - refine-linear-model
       - refine-svr-model
     runs-on: ubuntu-latest
     steps:
