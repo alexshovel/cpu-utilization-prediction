@@ -74,6 +74,7 @@ jobs:
       - name: training SVR model
         run: |
           rm -rf src/__pycache__
+          cat src/train.py
           python src/train.py -m svr
 
           
@@ -128,6 +129,7 @@ jobs:
       - name: training SVR model
         run: |
           rm -rf src/__pycache__
+          cat src/train.py
           python src/train.py -m svr
 
 
