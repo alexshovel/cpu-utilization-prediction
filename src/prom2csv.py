@@ -53,9 +53,12 @@ def getMetric(api_url: str, label: str, start: str, end: str, step: int=90):
 
         #print('RESULT_LEN', label, len(response['data']['result']))
         #time.sleep(0.1)
-        for vals in response['data']['result'][0]['values']:
-            res['times'].append(vals[0])
-            res['vals'].append(vals[1])
+        try:
+            for vals in response['data']['result'][0]['values']:
+                res['times'].append(vals[0])
+                res['vals'].append(vals[1])
+        except IndexError:
+            pass
 
     return res
 
@@ -93,9 +96,10 @@ def run():
         if not os.path.exists('datasets'):
             os.makedirs('datasets')
 
-        s = StringIO()
-        pd.DataFrame.from_dict(res).drop('timestamp', axis=1).to_csv(s, index=False)
-        writeDataset(f'dataset-{step}', s.getvalue())
+        if len(res) > 2:
+            s = StringIO()
+            pd.DataFrame.from_dict(res).drop('timestamp', axis=1).to_csv(s, index=False)
+            writeDataset(f'dataset-{step}', s.getvalue())
 
 if __name__ == '__main__':
     run()
