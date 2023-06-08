@@ -26,7 +26,7 @@ def train_selected_model(data: pd, step: int):
     global script_args
     target_metric = app_settings.get('target_metric')
 
-    print(script_args.regression_type)
+    train_iters = 1
     if script_args.regression_type in ['L', 'Linear', 'linear']:
         pg_key = 'linear_model'
         train_iters = 100
