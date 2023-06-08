@@ -96,7 +96,7 @@ def run():
         if not os.path.exists('datasets'):
             os.makedirs('datasets')
 
-        if len(res) > 2:
+        if len(res) > 2 and False:
             s = StringIO()
             pd.DataFrame.from_dict(res).drop('timestamp', axis=1).to_csv(s, index=False)
             writeDataset(f'dataset-{step}', s.getvalue())
